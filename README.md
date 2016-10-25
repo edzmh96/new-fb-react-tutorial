@@ -47,6 +47,7 @@ class Square extends React.Component {
 
 ### About the components
 - React elements are JS Objects, so they can be passed around:
+- Below we iterate through an array and store the rendered components in another array. 
 ```javascript
     const moves = history.map((step, move) => {
       const desc = move ?
@@ -81,7 +82,9 @@ class Square extends React.Component {
       </div>
     );
 ```
-- "key" is a special property reserved by React to use in components generated in an array/iterator
+
+### Keys in array/iterator generation of components
+- "key" is a special property reserved by React to use in components generated in an array/iterator (refer to the first function in "About the components")
 - keys should be unique relative to the siblings
 - React uses 'key' as a property to determine which item in the array/list it should render, so if we're just shifting elements around it doesn't re-render
 - likewise, changing the key will cause the component to be destroyed and recreated
