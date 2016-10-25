@@ -87,8 +87,14 @@ class Square extends React.Component {
 - likewise, changing the key will cause the component to be destroyed and recreated
 - don't use the index of the array as a key, the key should be unique relative to the item's siblings in the array and doesn't change when items are shuffled
 - key cannot be accessed through this.props.key, even though it's a property
-- define key like so: <someClass key={somekey}></someClass>. someClass can be a custom React component class or default html classes like <li></li> and <a></a>
-
+- define key like so: 
+```javascript
+<someClass key={somekey}></someClass>
+```
+someClass can be a custom React component class or default html classes like 
+```javascript
+<li></li> and <a></a>
+```
 
 ### Other stuff learnt in this process
 
