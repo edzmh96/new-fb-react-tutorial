@@ -31,31 +31,47 @@ class Board extends React.Component {
       //can inline values (i) in JSX like so
       //in the Square class, can be accessed through this.props.prop_name, in this case prop_name = squares
     renderSquare(i) {
-        return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)}/>;
+        return <Square key={i} value={this.props.squares[i]} onClick={() => this.props.onClick(i)}/>;
     }
 
     render() {
+        let size = 3;
+        const board = [];
+        //rendering the board not hardcoding it
+        for (var i = 0; i < size; i++) {
+            var row = [];
+            for (var j = 0; j < size; j++) {
+                row.push(this.renderSquare(i*3 + j));
+            }
+            board.push(<div key={i} className="board-row">{row}</div>)
+        }
 
         return (
-          <div>
-          <div className="status">{status}</div>
-          <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-          </div>
-          <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-          </div>
-          <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-          </div>
-          </div>
-          );
+            <div>
+                <div className="status">{status}</div>
+                {board}
+            </div>
+        );
+        // return (
+        //   <div>
+        //   <div className="status">{status}</div>
+        //   <div className="board-row">
+        //   {this.renderSquare(0)}
+        //   {this.renderSquare(1)}
+        //   {this.renderSquare(2)}
+        //   </div>
+        //   <div className="board-row">
+        //   {this.renderSquare(3)}
+        //   {this.renderSquare(4)}
+        //   {this.renderSquare(5)}
+        //   </div>
+        //   <div className="board-row">
+        //   {this.renderSquare(6)}
+        //   {this.renderSquare(7)}
+        //   {this.renderSquare(8)}
+        //   </div>
+        //   </div>
+        //   );
     }
 }
 
@@ -154,16 +170,16 @@ class Game extends React.Component {
 
       return (
           <div className="game">
-          <div className="game-board">
-          <Board
-          squares={current.squares}
-          onClick={(i) => this.handleClick(i)}
-          />
-          </div>
-          <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
-          </div>
+              <div className="game-board">
+                  <Board
+                  squares={current.squares}
+                  onClick={(i) => this.handleClick(i)}
+                  />
+              </div>
+              <div className="game-info">
+                  <div>{status}</div>
+                  <ol>{moves}</ol>
+              </div>
           </div>
           );
     }
