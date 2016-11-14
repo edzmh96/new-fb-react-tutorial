@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-    //stateless functional component, doesn't have a state so we don't need a constructor or extend React.Component
-    //in this case Square previously only had 1 function : render, so we got rid of it and the "this" object in the process,
-    //props gets passed in automatically
-    /*
-    class Square extends React.Component {
-      render() {
-        return (
-          <button className="square" onClick={() => this.props.onClick()}>
-            {this.props.value}
-          </button>
-        );
-      }
-    }
-    */
+//stateless functional component, doesn't have a state so we don't need a constructor or extend React.Component
+//in this case Square previously only had 1 function : render, so we got rid of it and the "this" object in the process,
+//props gets passed in automatically
+/*
+class Square extends React.Component {
+  render() {
+    return (
+      <button className="square" onClick={() => this.props.onClick()}>
+        {this.props.value}
+      </button>
+    );
+  }
+}
+*/
 function Square(props) {
     return (
       //setState is a react function that changes the state of the component
@@ -26,6 +26,12 @@ function Square(props) {
       // when the state is changed, the component refreshes
       );
     }
+
+function ToggleButton(props) {
+  return (
+    <button className="button" onClick={() => props.onClick()}>Reverse</button>
+  )
+}
 
 class Board extends React.Component {
       //can inline values (i) in JSX like so
@@ -84,8 +90,15 @@ class Game extends React.Component {
                 newMove: null
             }],
             xIsNext: true,
-            stepNumber: 0
+            stepNumber: 0,
+            ascending: true,
         }
+    }
+
+    toggleStatus() {
+      this.setState({
+        ascending: !this.state.ascending
+      });
     }
 
     handleClick(i) {
@@ -133,11 +146,12 @@ class Game extends React.Component {
     }
 
     render() {
-        const history = this.state.history;
+        let history = this.state.history;
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
         //step is {squares: squares}, move is index
-        const moves = history.map((step, move) => {
+
+        let moves = history.map((step, move) => {
             var desc;
             if (move) {
                 var coordinates = this.getCoordinate(step.newMove + 1);
@@ -161,6 +175,10 @@ class Game extends React.Component {
             }
         });
 
+        if (!this.state.ascending) {
+          moves = moves.reverse();
+        }
+
         let status;
         if (winner) {
           status = 'Winner: ' + winner;
@@ -179,6 +197,11 @@ class Game extends React.Component {
               <div className="game-info">
                   <div>{status}</div>
                   <ol>{moves}</ol>
+              </div>
+              <div className="info-toggle">
+                <ToggleButton
+                  onClick={() => this.toggleStatus()}
+                />
               </div>
           </div>
           );
